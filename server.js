@@ -6,7 +6,7 @@ const questions = () => {
         {
             type: 'list',
             name: 'options',
-            message: 'asdds',
+            message: 'Please choose what you woud like to do.',
             choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
         },
     ])
@@ -24,8 +24,20 @@ const questions = () => {
 
 questions();
 
-const viewDepartments = () => {
-    // add db for view all departments
+function viewDepartments () {
+    const sql  = `SELECT department_id AS id,
+    department_name AS name
+    FROM department`;
+    db.query(sql, (err, row) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+        }
+        res.json({
+            message: 'success',
+            data: row
+        });
+    });
 };
 
 // Show table for all departments
