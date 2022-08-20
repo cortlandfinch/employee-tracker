@@ -2,24 +2,24 @@
 const db = require('./db');
 const inquirer = require('inquirer');
 const questions = () => {
-   inquirer.prompt ([
-    { 
-        type: 'list',
-        name: 'options',
-        message: 'asdds',
-        choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
-    },
-   ])
-   .then((answer) => {
-    console.log(answer.options);
-    switch(answer.options) {
-        case 'View all departments':
-            viewDepartments();
-            break;
-        default:
-            console.log('You are finished.');
-    }
-   });
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'options',
+            message: 'asdds',
+            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
+        },
+    ])
+        .then((answer) => {
+            console.log(answer.options);
+            switch (answer.options) {
+                case 'View all departments':
+                    viewDepartments();
+                    break;
+                default:
+                    console.log('You are finished.');
+            }
+        });
 };
 
 questions();
