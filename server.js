@@ -1,5 +1,5 @@
 // Prompt new users for options (view all departments/ roles/ employees/ add a department/ add a role/ add an employee/ update an employee role) ** use inquirer and import entire database folder
-const db = require('./db');
+const db = require('./db/connection');
 const inquirer = require('inquirer');
 const questions = () => {
     inquirer.prompt([
@@ -13,8 +13,14 @@ const questions = () => {
         .then((answer) => {
             console.log(answer.options);
             switch (answer.options) {
-                case 'View all departments':
+                case 'View all Departments':
                     viewDepartments();
+                    break;
+                case 'View all Roles':
+                    viewRoles();
+                    break;
+                case 'View all Employees':
+                    viewEmployees();
                     break;
                 default:
                     console.log('You are finished.');
@@ -25,20 +31,35 @@ const questions = () => {
 questions();
 
 function viewDepartments () {
-    const sql  = `SELECT department_id AS id,
-    department_name AS name
+    const sql  = `SELECT id AS department_id,
+    name AS department_name
     FROM department`;
     db.query(sql, (err, row) => {
         if (err) {
-            res.status(400).json({ error: err.message });
-            return;
+            console.log(err.message);
         }
-        res.json({
-            message: 'success',
-            data: row
-        });
+        console.table(row);
     });
 };
+
+function viewRoles () {
+    const sql = `SELECT id AS role_id,
+    title AS role_title,
+    salary AS role_salary,
+    department_id AS role_department_id
+    FROM role
+    LEFT JOIN department ON role.department_id = department.name`;
+    db.query(sql, (err, row) => {
+        if (err) {
+            console.log(err.message);
+        }
+        console.table(row);
+    });
+};
+
+function viewEmployees () {
+    const sql = ``
+}
 
 // Show table for all departments
 // Show table for all roles (job title, role id, department, salary)

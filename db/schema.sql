@@ -17,8 +17,9 @@ CREATE TABLE role (
     salary DECIMAL NOT NULL,
     department_id INTEGER NOT NULL,
     -- set relationship between role department id and id from department
-    FOREIGN KEY (department_id)
-    REFERENCES department(id)
+    INDEX dep_ind(department_id),
+    CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES department(id)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE employee (
@@ -28,10 +29,12 @@ CREATE TABLE employee (
     role_id INTEGER NOT NULL,
     manager_id INTEGER NOT NULL,
     -- set relationship between roles id and id in roles
-    FOREIGN KEY (role_id) 
-    REFERENCES role(id),
+    INDEX role_ind(role_id),
+    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role(id)
+    ON DELETE CASCADE
     -- set relationship between managers id and employee id
-    FOREIGN KEY (manager_id) 
-    REFERENCES employee(id)
-);
+    INDEX manager_ind(manager_id),
+    CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(id)
+    ON DELETE set NULL
+)
 
