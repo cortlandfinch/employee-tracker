@@ -11,3 +11,5 @@ const db = mysql.createConnection(
         database: 'business'
     }
 )
+
+module.exports = db;

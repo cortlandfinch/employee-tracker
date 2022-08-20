@@ -1,5 +1,5 @@
 // Prompt new users for options (view all departments/ roles/ employees/ add a department/ add a role/ add an employee/ update an employee role) ** use inquirer and import entire database folder
-const db = require('./db/connection');
+const db = require('./db');
 const inquirer = require('inquirer');
 const questions = () => {
     inquirer.prompt([
@@ -7,7 +7,7 @@ const questions = () => {
             type: 'list',
             name: 'options',
             message: 'Please choose what you woud like to do.',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role']
+            choices: ['View all Departments', 'View all Roles', 'View all Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update an Employee Role']
         },
     ])
         .then((answer) => {
@@ -30,39 +30,30 @@ const questions = () => {
 
 questions();
 
+// Show table for all departments
 function viewDepartments () {
-    const sql  = `SELECT id AS department_id,
-    name AS department_name
-    FROM department`;
-    db.query(sql, (err, row) => {
-        if (err) {
-            console.log(err.message);
-        }
-        console.table(row);
-    });
+    db.findDepartments()
+    .then (([rows]) => {
+        let departments = rows
+        console.table(departments)
+    })
+    .then (() => questions())
 };
 
+// Show table for all roles (job title, role id, department, salary)
 function viewRoles () {
-    const sql = `SELECT id AS role_id,
-    title AS role_title,
-    salary AS role_salary,
-    department_id AS role_department_id
-    FROM role
-    LEFT JOIN department ON role.department_id = department.name`;
-    db.query(sql, (err, row) => {
-        if (err) {
-            console.log(err.message);
-        }
-        console.table(row);
-    });
+    db.findRoles()
+    .then (([rows]) => {
+        let roles = rows
+        console.table(roles)
+    })
+    .then (() => questions())
 };
 
 function viewEmployees () {
-    const sql = ``
-}
 
-// Show table for all departments
-// Show table for all roles (job title, role id, department, salary)
+};
+
 // SHow table for employees (id, first name, last name, job title, department, salary, managers)
 
 // Add department 
