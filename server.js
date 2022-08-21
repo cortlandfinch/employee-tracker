@@ -25,7 +25,9 @@ const questions = () => {
                 case 'Add a New Department':
                     addNewDepartment();
                     break;
-                
+                case 'Add a New Role':
+                    addNewRole();
+                    break;
                 default:
                     console.log('You are finished.');
             }
@@ -89,9 +91,45 @@ const addNewDepartment = () => {
     })
 };
 
-
 // Add role
     // Enter name, salary, department
+const addNewRole = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'What is the Name of the New Role?',
+            validate: (titleInput) => {
+                if(titleInput) {
+                    console.log('You have successfully added a New Role!');
+                    return true;
+                } else {
+                    console.log('You need to provide the New Name of the Role you are adding!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the Salary of the New Role?',
+            validate: (salaryInput) => {
+                if(salaryInput) {
+                    console.log('You have successfully added a Salary for the New Role!');
+                    return true;
+                } else {
+                    console.log('You need ot provide the Salary of the New Role you are adding!');
+                    return false;
+                }
+            }
+        }
+    ])
+    .then((answer) => {
+        db.makeNewRole(answer)
+        .then (() => questions());
+    })
+};
+
 // Add employee
     // enter first name, last name, role, manager
 // Update employee

@@ -17,6 +17,9 @@ class userChoice {
         // using SET ? to pass in user input of name from addNewDepartment function
         return this.connection.promise().query("INSERT INTO department SET ?", name);
     }
+    makeNewRole (role) {
+        return this.connection.promise().query("INSERT INTO role SET ?", role);
+    }
 }
 
 module.exports = new userChoice(connection);
