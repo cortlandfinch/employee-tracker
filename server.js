@@ -70,13 +70,14 @@ const addNewDepartment = () => {
     inquirer.prompt([
         {
             type: 'input',
-            name: 'department',
+            name: 'name',
             message: 'What is the name of the New Department?',
             validate: (departmentInput) => {
                 if(departmentInput) {
+                    console.log('You have successfully added a New Department!');
                     return true;
                 } else {
-                    console.log('You need to provide the New Name of the Department you are adding.');
+                    console.log('You need to provide the New Name of the Department you are adding!');
                     return false;
                 }
             }
@@ -86,7 +87,7 @@ const addNewDepartment = () => {
         db.makeNewDepartment(answer)
         .then(() => questions());
     })
-}
+};
 
 
 // Add role
