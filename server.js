@@ -33,9 +33,9 @@ questions();
 // Show table for all departments
 function viewDepartments () {
     db.findDepartments()
-    .then (([rows]) => {
-        let departments = rows
-        console.table(departments)
+    .then (([data]) => {
+        // let departments = rows
+        console.table(data)
     })
     .then (() => questions())
 };
@@ -43,18 +43,18 @@ function viewDepartments () {
 // Show table for all roles (job title, role id, department, salary)
 function viewRoles () {
     db.findRoles()
-    .then (([rows]) => {
-        let roles = rows
-        console.table(roles)
+    .then (([data]) => {
+        // let roles = rows
+        console.table(data)
     })
     .then (() => questions())
 };
 
+// Show table for employees (id, first name, last name, job title, department, salary, managers)
 function viewEmployees () {
-
+    db.findEmployees()
+    .then (([rows]))
 };
-
-// SHow table for employees (id, first name, last name, job title, department, salary, managers)
 
 // Add department 
     // Enter name of department
