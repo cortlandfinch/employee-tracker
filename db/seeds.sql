@@ -6,29 +6,30 @@ VALUES
 ('Sales'),
 ('Engineering'),
 ('Finance'),
-('Legal');
+('Legal'),
+('Manager');
 
 INSERT INTO role
-(title, department_id, salary)
+(title, salary, department_id)
 VALUES
-('Sales Lead', 1, 100000),
-('Salesperson', 1, 80000),
-('Lead Engineer', 2, 150000),
-('Software Engineer', 2, 120000),
-('Account Manager', 3, 160000),
-('Accountant', 3, 125000),
-('Legal Team Lead', 4, 250000),
-('Lawyer', 4, 190000);
+('Sales Lead', 100000, 1),
+('Salesperson', 80000, 1),
+('Lead Engineer', 150000, 2),
+('Software Engineer', 120000, 2),
+('Account Manager', 160000, 5),
+('Accountant', 125000, 3),
+('Legal Team Lead', 250000, 4),
+('Lawyer', 190000, 4);
 
 INSERT INTO employee
 (first_name, last_name, role_id, manager_id)
 VALUES
-('Joey', 'Tribbiani', 1, 1),
-('Chandler', 'Bing', 1, 0),
+('Joey', 'Tribbiani', 5, NULL),
+('Chandler', 'Bing', 1, 1),
 ('Ross', 'Geller', 2, 1),
-('Rachel', 'Green', 2, 0),
-('Monica', 'Geller', 3, 1),
-('Phoebe', 'Buffay', 3, 0),
-('Richard', 'Burke', 4, 1),
-('Janice', 'Hosenstein', 4, 0);
+('Rachel', 'Green', 3, 1),
+('Monica', 'Geller', 5, 1),
+('Phoebe', 'Buffay', 8, 1),
+('Richard', 'Burke', 7, 1),
+('Janice', 'Hosenstein', 6, 1);
 

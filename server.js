@@ -33,27 +33,31 @@ questions();
 // Show table for all departments
 function viewDepartments () {
     db.findDepartments()
-    .then (([data]) => {
-        // let departments = rows
-        console.table(data)
+    .then (([rows]) => {
+        let departments = rows
+        console.table(departments);
     })
-    .then (() => questions())
+    .then (() => questions());
 };
 
 // Show table for all roles (job title, role id, department, salary)
 function viewRoles () {
     db.findRoles()
-    .then (([data]) => {
-        // let roles = rows
-        console.table(data)
+    .then (([rows]) => {
+        let roles = rows
+        console.table(roles);
     })
-    .then (() => questions())
+    .then (() => questions());
 };
 
 // Show table for employees (id, first name, last name, job title, department, salary, managers)
 function viewEmployees () {
     db.findEmployees()
-    .then (([rows]))
+    .then (([rows]) => {
+        let employees = rows
+        console.table(employees);
+    })
+    .then (() => questions());
 };
 
 // Add department 
