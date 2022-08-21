@@ -7,7 +7,7 @@ const questions = () => {
             type: 'list',
             name: 'options',
             message: 'Please choose what you woud like to do.',
-            choices: ['View all Departments', 'View all Roles', 'View all Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update an Employee Role']
+            choices: ['View all Departments', 'View all Roles', 'View all Employees', 'Add a New Department', 'Add a New Role', 'Add a New Employee', 'Update an Employee Role']
         },
     ])
         .then((answer) => {
@@ -22,6 +22,10 @@ const questions = () => {
                 case 'View all Employees':
                     viewEmployees();
                     break;
+                case 'Add a New Department':
+                    addNewDepartment();
+                    break;
+                
                 default:
                     console.log('You are finished.');
             }
@@ -62,6 +66,29 @@ function viewEmployees () {
 
 // Add department 
     // Enter name of department
+const addNewDepartment = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'department',
+            message: 'What is the name of the New Department?',
+            validate: (departmentInput) => {
+                if(departmentInput) {
+                    return true;
+                } else {
+                    console.log('You need to provide the New Name of the Department you are adding.');
+                    return false;
+                }
+            }
+        }
+    ])
+    .then((answer) => {
+        db.makeNewDepartment(answer)
+        .then(() => questions());
+    })
+}
+
+
 // Add role
     // Enter name, salary, department
 // Add employee
