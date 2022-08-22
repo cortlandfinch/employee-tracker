@@ -28,6 +28,9 @@ const questions = () => {
                 case 'Add a New Role':
                     addNewRole();
                     break;
+                case 'Add a New Employee':
+                    addNewEmployee();
+                    break;
                 default:
                     console.log('You are finished.');
             }
@@ -76,10 +79,9 @@ const addNewDepartment = () => {
             message: 'What is the name of the New Department?',
             validate: (departmentInput) => {
                 if(departmentInput) {
-                    console.log('You have successfully added a New Department!');
                     return true;
                 } else {
-                    console.log('You need to provide the New Name of the Department you are adding!');
+                    console.log('You need to provide the New Name of the Department!');
                     return false;
                 }
             }
@@ -94,43 +96,115 @@ const addNewDepartment = () => {
 // Add role
     // Enter name, salary, department
 const addNewRole = () => {
+    db.findDepartments().then(([table]) => {
+        let departments = table;
+        const departmentTable = departments.map(({ name, id }) => ({
+            name: name,
+            value: id
+        }))
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'What is the Name of the New Role?',
+                validate: (titleInput) => {
+                    if(titleInput) {
+                        return true;
+                    } else {
+                        console.log('You need to provide the New Name of the Role!');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'What is the Salary of the New Role?',
+                validate: (salaryInput) => {
+                    if(salaryInput) {
+                        return true;
+                    } else {
+                        console.log('You need to provide the Salary of the New Role!');
+                        return false;
+                    }
+                }
+            },
+            {
+               type: 'list',
+               name: 'department_id',
+               message: 'What Department does this New Role belong to?',
+               choices: departmentTable,
+            }
+        ])
+        .then((answer) => {
+            db.makeNewRole(answer)
+            .then (() => questions());
+        })
+    });
+};
+
+// Add employee
+//     enter first name, last name, role, manager
+const addNewEmployee = () => {
     inquirer.prompt([
         {
             type: 'input',
-            name: 'title',
-            message: 'What is the Name of the New Role?',
-            validate: (titleInput) => {
-                if(titleInput) {
-                    console.log('You have successfully added a New Role!');
+            name: 'first_name',
+            message: 'What is the First Name of the New Employee?',
+            validate: (firstNameInput) => {
+                if(firstNameInput) {
                     return true;
                 } else {
-                    console.log('You need to provide the New Name of the Role you are adding!');
+                    console.log('You need to provide a First Name for the New Employee!');
                     return false;
                 }
             }
         },
         {
             type: 'input',
-            name: 'salary',
-            message: 'What is the Salary of the New Role?',
-            validate: (salaryInput) => {
-                if(salaryInput) {
-                    console.log('You have successfully added a Salary for the New Role!');
+            name: 'last_name',
+            message: 'What is the Last Name of the New Employee?',
+            validate: (lastNameInput) => {
+                if(lastNameInput) {
                     return true;
                 } else {
-                    console.log('You need ot provide the Salary of the New Role you are adding!');
+                    console.log('You need to provide a Last Name for the New Employee!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'role_id',
+            message: 'Please choose a Role for this New Employee.',
+            validate: (roleIdInput) => {
+                if(roleIdInput) {
+                    return true;
+                } else {
+                    console.log('You need to proivde a Role ID for the New Employee!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'manager_id',
+            message: 'Please choose a Manager ID for this New Employee.',
+            validate: (managerIdInput) => {
+                if(managerIdInput) {
+                    return true;
+                } else {
+                    console.log('You need to provide a Manager ID for the New Employee!');
                     return false;
                 }
             }
         }
     ])
     .then((answer) => {
-        db.makeNewRole(answer)
-        .then (() => questions());
+        db.makeNewEmployee(answer)
+        .then(() => questions());
     })
 };
 
-// Add employee
-    // enter first name, last name, role, manager
 // Update employee
     // select employee - enter new role
