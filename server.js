@@ -40,37 +40,37 @@ const questions = () => {
 questions();
 
 // Show table for all departments
-function viewDepartments () {
+function viewDepartments() {
     db.findDepartments()
-    .then (([rows]) => {
-        let departments = rows
-        console.table(departments);
-    })
-    .then (() => questions());
+        .then(([rows]) => {
+            let departments = rows
+            console.table(departments);
+        })
+        .then(() => questions());
 };
 
 // Show table for all roles (job title, role id, department, salary)
-function viewRoles () {
+function viewRoles() {
     db.findRoles()
-    .then (([rows]) => {
-        let roles = rows
-        console.table(roles);
-    })
-    .then (() => questions());
+        .then(([rows]) => {
+            let roles = rows
+            console.table(roles);
+        })
+        .then(() => questions());
 };
 
 // Show table for employees (id, first name, last name, job title, department, salary, managers)
-function viewEmployees () {
+function viewEmployees() {
     db.findEmployees()
-    .then (([rows]) => {
-        let employees = rows
-        console.table(employees);
-    })
-    .then (() => questions());
+        .then(([rows]) => {
+            let employees = rows
+            console.table(employees);
+        })
+        .then(() => questions());
 };
 
 // Add department 
-    // Enter name of department
+// Enter name of department
 const addNewDepartment = () => {
     inquirer.prompt([
         {
@@ -78,7 +78,7 @@ const addNewDepartment = () => {
             name: 'name',
             message: 'What is the name of the New Department?',
             validate: (departmentInput) => {
-                if(departmentInput) {
+                if (departmentInput) {
                     return true;
                 } else {
                     console.log('You need to provide the New Name of the Department!');
@@ -87,14 +87,14 @@ const addNewDepartment = () => {
             }
         }
     ])
-    .then((answer) => {
-        db.makeNewDepartment(answer)
-        .then(() => questions());
-    })
+        .then((answer) => {
+            db.makeNewDepartment(answer)
+                .then(() => questions());
+        })
 };
 
 // Add role
-    // Enter name, salary, department
+// Enter name, salary, department
 const addNewRole = () => {
     db.findDepartments().then(([rows]) => {
         let departments = rows;
@@ -108,7 +108,7 @@ const addNewRole = () => {
                 name: 'title',
                 message: 'What is the Name of the New Role?',
                 validate: (titleInput) => {
-                    if(titleInput) {
+                    if (titleInput) {
                         return true;
                     } else {
                         console.log('You need to provide the New Name of the Role!');
@@ -121,7 +121,7 @@ const addNewRole = () => {
                 name: 'salary',
                 message: 'What is the Salary of the New Role?',
                 validate: (salaryInput) => {
-                    if(salaryInput) {
+                    if (salaryInput) {
                         return true;
                     } else {
                         console.log('You need to provide the Salary of the New Role!');
@@ -130,16 +130,16 @@ const addNewRole = () => {
                 }
             },
             {
-               type: 'list',
-               name: 'department_id',
-               message: 'What Department does this New Role belong to?',
-               choices: departmentTable,
+                type: 'list',
+                name: 'department_id',
+                message: 'What Department does this New Role belong to?',
+                choices: departmentTable,
             }
         ])
-        .then((answer) => {
-            db.makeNewRole(answer)
-            .then (() => questions());
-        })
+            .then((answer) => {
+                db.makeNewRole(answer)
+                    .then(() => questions());
+            })
     });
 };
 
@@ -158,7 +158,7 @@ const addNewEmployee = () => {
                 name: 'first_name',
                 message: 'What is the First Name of the New Employee?',
                 validate: (firstNameInput) => {
-                    if(firstNameInput) {
+                    if (firstNameInput) {
                         return true;
                     } else {
                         console.log('You need to provide a First Name for the New Employee!');
@@ -171,7 +171,7 @@ const addNewEmployee = () => {
                 name: 'last_name',
                 message: 'What is the Last Name of the New Employee?',
                 validate: (lastNameInput) => {
-                    if(lastNameInput) {
+                    if (lastNameInput) {
                         return true;
                     } else {
                         console.log('You need to provide a Last Name for the New Employee!');
@@ -190,7 +190,7 @@ const addNewEmployee = () => {
                 name: 'manager_id',
                 message: 'Please choose a Manager ID for this New Employee.',
                 validate: (managerIdInput) => {
-                    if(managerIdInput) {
+                    if (managerIdInput) {
                         return true;
                     } else {
                         console.log('You need to provide a Manager ID for the New Employee!');
@@ -199,10 +199,10 @@ const addNewEmployee = () => {
                 }
             }
         ])
-        .then((answer) => {
-            db.makeNewEmployee(answer)
-            .then(() => questions());
-        })
+            .then((answer) => {
+                db.makeNewEmployee(answer)
+                    .then(() => questions());
+            })
     });
 };
 
