@@ -96,12 +96,12 @@ const addNewDepartment = () => {
 // Add role
     // Enter name, salary, department
 const addNewRole = () => {
-    db.findDepartments().then(([table]) => {
-        let departments = table;
+    db.findDepartments().then(([rows]) => {
+        let departments = rows;
         const departmentTable = departments.map(({ name, id }) => ({
             name: name,
             value: id
-        }))
+        }));
         inquirer.prompt([
             {
                 type: 'input',
@@ -146,64 +146,64 @@ const addNewRole = () => {
 // Add employee
 //     enter first name, last name, role, manager
 const addNewEmployee = () => {
-    inquirer.prompt([
-        {
-            type: 'input',
-            name: 'first_name',
-            message: 'What is the First Name of the New Employee?',
-            validate: (firstNameInput) => {
-                if(firstNameInput) {
-                    return true;
-                } else {
-                    console.log('You need to provide a First Name for the New Employee!');
-                    return false;
+    db.findRoles().then(([rows]) => {
+        let roles = rows;
+        const roleTable = roles.map(({ name, id }) => ({
+            name: name,
+            value: id
+        }));
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'first_name',
+                message: 'What is the First Name of the New Employee?',
+                validate: (firstNameInput) => {
+                    if(firstNameInput) {
+                        return true;
+                    } else {
+                        console.log('You need to provide a First Name for the New Employee!');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'last_name',
+                message: 'What is the Last Name of the New Employee?',
+                validate: (lastNameInput) => {
+                    if(lastNameInput) {
+                        return true;
+                    } else {
+                        console.log('You need to provide a Last Name for the New Employee!');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'list',
+                name: 'role_id',
+                message: 'Please choose a Role for this New Employee.',
+                choices: roleTable,
+            },
+            {
+                type: 'input',
+                name: 'manager_id',
+                message: 'Please choose a Manager ID for this New Employee.',
+                validate: (managerIdInput) => {
+                    if(managerIdInput) {
+                        return true;
+                    } else {
+                        console.log('You need to provide a Manager ID for the New Employee!');
+                        return false;
+                    }
                 }
             }
-        },
-        {
-            type: 'input',
-            name: 'last_name',
-            message: 'What is the Last Name of the New Employee?',
-            validate: (lastNameInput) => {
-                if(lastNameInput) {
-                    return true;
-                } else {
-                    console.log('You need to provide a Last Name for the New Employee!');
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'role_id',
-            message: 'Please choose a Role for this New Employee.',
-            validate: (roleIdInput) => {
-                if(roleIdInput) {
-                    return true;
-                } else {
-                    console.log('You need to proivde a Role ID for the New Employee!');
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'manager_id',
-            message: 'Please choose a Manager ID for this New Employee.',
-            validate: (managerIdInput) => {
-                if(managerIdInput) {
-                    return true;
-                } else {
-                    console.log('You need to provide a Manager ID for the New Employee!');
-                    return false;
-                }
-            }
-        }
-    ])
-    .then((answer) => {
-        db.makeNewEmployee(answer)
-        .then(() => questions());
-    })
+        ])
+        .then((answer) => {
+            db.makeNewEmployee(answer)
+            .then(() => questions());
+        })
+    });
 };
 
 // Update employee
